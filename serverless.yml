@@ -1,0 +1,23 @@
+service: sosa
+
+app: sosa
+org: ralphcrosales
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  stage: ${env:STAGE}
+  region: ${env:AWS_REGION}
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+functions:
+  products:
+    handler: handler.products
+    events:
+      - http: GET /api/products
