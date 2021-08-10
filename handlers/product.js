@@ -4,14 +4,14 @@ const express = require('express');
 
 const app = express();
 
-const products = require('../daos/products');
+const productDAO = require('../daos/product');
 
 app.use(express.json());
 
 app.get('/api/products', async (req, res) => {
   let response = { success: false };
   try {
-    const data = await products.getProducts();
+    const data = await productDAO.getProducts();
     response = { success: true, data };
   } catch (err) {
     response.message = err.message;
