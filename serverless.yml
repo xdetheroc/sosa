@@ -18,6 +18,6 @@ plugins:
 
 functions:
   products:
-    handler: handler.products
+    handler: handlers/product.handler
     events:
       - http: GET /api/products

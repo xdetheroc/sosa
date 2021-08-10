@@ -4,15 +4,14 @@ const express = require('express');
 
 const app = express();
 
-const process = require('./process');
+const products = require('../daos/products');
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/api/products', async (req, res) => {
   let response = { success: false };
   try {
-    const data = await process.getProducts();
+    const data = await products.getProducts();
     response = { success: true, data };
   } catch (err) {
     response.message = err.message;
@@ -21,4 +20,4 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-module.exports.products = serverless(app);
+module.exports.handler = serverless(app);
