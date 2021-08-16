@@ -3,12 +3,39 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { CustomerController } from './../customer/routes/CustomerController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { CustomersController } from './../customer/routes/CustomersController';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "OrderDetailDto": {
+        "dataType": "refObject",
+        "properties": {
+            "order_detail_id": { "dataType": "double" },
+            "order_id": { "dataType": "double" },
+            "product_id": { "dataType": "double", "required": true },
+            "quantity": { "dataType": "double", "required": true },
+            "date_created": { "dataType": "string" },
+            "date_updated": { "dataType": "string" },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "OrderDto": {
+        "dataType": "refObject",
+        "properties": {
+            "order_id": { "dataType": "double" },
+            "customer_id": { "dataType": "double" },
+            "order_details": { "dataType": "array", "array": { "ref": "OrderDetailDto" }, "required": true },
+            "date_created": { "dataType": "string" },
+            "date_updated": { "dataType": "string" },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CustomerDto": {
         "dataType": "refObject",
         "properties": {
@@ -30,6 +57,29 @@ export function RegisterRoutes(app: express.Express) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+    app.post('/api/customer/:customerId/order',
+        function(request: any, response: any, next: any) {
+            const args = {
+                customerId: { "in": "path", "name": "customerId", "required": true, "dataType": "double" },
+                order: { "in": "body", "name": "order", "required": true, "ref": "OrderDto" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new CustomerController();
+
+
+            const promise = controller.addCustomerOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/api/customers',
         function(request: any, response: any, next: any) {
             const args = {

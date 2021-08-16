@@ -9,4 +9,13 @@ export class CustomerService {
             throw new Error(error);
         }
     }
+
+    public static async addCustomer(customer: CustomerModel): Promise<CustomerModel> {
+        try {
+            return await CustomerModel.create(customer);
+        } catch (error) {
+            console.error(error);
+            throw new Error(error);
+        }
+    }
 }
