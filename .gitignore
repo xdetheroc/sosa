@@ -105,3 +105,4 @@ dist
 
 sonar-project.properties
 .scannerwork/
+.build

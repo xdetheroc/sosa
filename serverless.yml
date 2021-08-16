@@ -15,9 +15,17 @@ provider:
 plugins:
   - serverless-offline
   - serverless-dotenv-plugin
+  - serverless-plugin-typescript
 
 functions:
-  products:
-    handler: handlers/product.handler
+  app:
+    handler: dist/app.handler
     events:
-      - http: GET /api/products
+      - http:
+          path: /api
+          method: ANY
+          cors: true
+      - http:
+          path: /api/{proxy+}
+          method: ANY
+          cors: true
